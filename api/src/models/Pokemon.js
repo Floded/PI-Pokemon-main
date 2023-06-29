@@ -5,7 +5,7 @@ const { all } = require("../routes");
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define(
-    "pokemon",
+    "Pokemon",
     {
       name: {
         type: DataTypes.STRING,
