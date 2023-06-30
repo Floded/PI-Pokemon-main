@@ -1,9 +1,11 @@
 require("dotenv").config();
+const { createNewPokemon } = require("../controllers/createNewPokemon");
 const {
   searchAllPokemons,
   searchPokemonByName,
   searchPokemonById,
 } = require("../controllers/pokemonsController");
+
 const { responseMaper } = require("../helpers/responseMaper");
 
 const getAllPokeHandler = async (req, res) => {
@@ -27,7 +29,7 @@ const getAllPokeHandler = async (req, res) => {
   }
 };
 
-const getPokemonById = async (req, res) => {
+const getPokemonByIdHandler = async (req, res) => {
   try {
     const { id } = req.params;
     const search = isNaN(id) ? "BDD" : "API";
@@ -43,4 +45,66 @@ const getPokemonById = async (req, res) => {
   }
 };
 
-module.exports = { getAllPokeHandler, getPokemonById };
+const createPokemonhandler = async (req, res) => {
+  try {
+    const {
+      name,
+      image,
+      health,
+      stroke,
+      defending,
+      speed,
+      height,
+      weight,
+      type,
+    } = req.body;
+    // console.log(req.body);
+    if (
+      !name ||
+      !image ||
+      !health ||
+      !stroke ||
+      !defending ||
+      !speed ||
+      !height ||
+      !weight ||
+      !type
+    ) {
+      res
+        .status(400)
+        .json(responseMaper(true, "completa todos los campos", null));
+    }
+    const newPokemon = await createNewPokemon(
+      name,
+      image,
+      health,
+      stroke,
+      defending,
+      speed,
+      height,
+      weight,
+      type
+    );
+    // console.log(newPokemon);
+    res
+      .status(200)
+      .json(
+        responseMaper(
+          false,
+          `El pokemon ${name} se ha creado con exito`,
+          newPokemon
+        )
+      );
+  } catch (error) {
+    const { name } = req.body;
+    res
+      .status(500)
+      .json(responseMaper(true, `No se pudo crear el Pokemon: ${name}`, null));
+  }
+};
+
+module.exports = {
+  getAllPokeHandler,
+  getPokemonByIdHandler,
+  createPokemonhandler,
+};

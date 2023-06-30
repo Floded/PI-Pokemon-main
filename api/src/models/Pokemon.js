@@ -7,6 +7,11 @@ module.exports = (sequelize) => {
   sequelize.define(
     "Pokemon",
     {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+      },
       name: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -41,7 +46,7 @@ module.exports = (sequelize) => {
       },
       created: {
         type: DataTypes.BOOLEAN,
-        allowNull: true,
+        defaultValue: true,
       },
     },
     {
