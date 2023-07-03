@@ -12,7 +12,6 @@ const createNewPokemon = async (
   weight,
   type
 ) => {
-  // console.log(name, image, health, stroke, defending, speed, height, weight);
   const isPokemonAlreadyExists = await Pokemon.findOne({
     where: {
       name,
@@ -35,7 +34,6 @@ const createNewPokemon = async (
   });
   await newPokemon.setTypes(type);
   let integradePokemon = await Pokemon.findAll({
-    // include: Type,
     where: {
       name: name,
     },
@@ -46,7 +44,7 @@ const createNewPokemon = async (
       },
     ],
   });
-  // console.log(integradePokemon);
+
   return integradePokemon;
 };
 

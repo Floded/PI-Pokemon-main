@@ -11,9 +11,11 @@ const { responseMaper } = require("../helpers/responseMaper");
 const getAllPokeHandler = async (req, res) => {
   try {
     const { name } = req.query;
+    const lowerName = name.toLowerCase();
+    console.log(lowerName);
     // console.log(name);
     const result = name
-      ? await searchPokemonByName(name)
+      ? await searchPokemonByName(lowerName)
       : await searchAllPokemons();
     // console.log(result);
     res
@@ -23,6 +25,8 @@ const getAllPokeHandler = async (req, res) => {
       );
   } catch (error) {
     const { name } = req.query;
+    const lowerName = name.toLowerCase();
+    console.log(lowerName);
     res
       .status(404)
       .json(responseMaper(true, `El Pokemon ${name} no existe`, null));
@@ -74,6 +78,7 @@ const createPokemonhandler = async (req, res) => {
         .status(400)
         .json(responseMaper(true, "completa todos los campos", null));
     }
+
     const newPokemon = await createNewPokemon(
       name,
       image,

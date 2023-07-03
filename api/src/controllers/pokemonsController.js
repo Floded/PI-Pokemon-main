@@ -1,9 +1,9 @@
 require("dotenv").config();
 const axios = require("axios");
 const { Op } = require("sequelize");
-const { cleanArray, cleanBy } = require("../helpers/cleanArray");
+const { cleanArray, cleanBy, cleanRes } = require("../helpers/cleanArray");
 const { END_POINT } = process.env;
-const { Pokemon } = require("../db");
+const { Pokemon, Type } = require("../db");
 
 // Busca todos los pokemons desde bdd y api
 
@@ -20,31 +20,62 @@ const searchAllPokemons = async () => {
 
   // BDD
 
-  const bddPokemon = await Pokemon.findAll();
+  const bddPokemon = await Pokemon.findAll({
+    include: [
+      {
+        model: Type,
+        attributes: ["id", "name"],
+      },
+    ],
+  });
+  // console.log(bddPokemon);
   return [...apiPokemon, ...bddPokemon];
 };
 
 const searchPokemonByName = async (name) => {
-  // API
-  const findPokemon = (
-    await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`)
-  ).data;
-  const apiPokemon = cleanBy(findPokemon);
-  // BDD
-  const bddPokemon = await await Pokemon.findAll({
-    where: { name: { [Op.like]: `${name}%` } },
+  const bddPokemon = await Pokemon.findOne({
+    where: { name: name },
+    include: {
+      model: Type,
+      attributes: ["id", "name"],
+    },
   });
-  // Uniendo API y BDD
-  return [apiPokemon, bddPokemon];
+
+  if (bddPokemon) {
+    const res = bddPokemon.dataValues;
+    const bddRes = cleanRes(res);
+    console.log(bddRes);
+    return bddRes;
+  } else {
+    const findPokemon = (
+      await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`)
+    ).data;
+    const apiPokemon = cleanBy(findPokemon);
+    return apiPokemon;
+  }
+  // return apiPokemon;
 };
 
 const searchPokemonById = async (id, search) => {
-  const flag =
-    search === "API"
-      ? (await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)).data
-      : await Pokemon.findByPk(id);
-  const result = cleanBy(flag);
-  return result;
+  if (search === "API") {
+    const apiResponse = (
+      await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
+    ).data;
+    const apiRes = cleanBy(apiResponse);
+    return apiRes;
+  } else {
+    const bddResponse = await Pokemon.findOne({
+      where: { id: id },
+      include: {
+        model: Type,
+        attributes: ["id", "name"],
+      },
+    });
+    const res = bddResponse.dataValues;
+    const bddRes = cleanRes(res);
+    // console.log(bddRes);
+    return bddRes;
+  }
 };
 
 module.exports = { searchAllPokemons, searchPokemonByName, searchPokemonById };
