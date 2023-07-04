@@ -11,11 +11,11 @@ const { responseMaper } = require("../helpers/responseMaper");
 const getAllPokeHandler = async (req, res) => {
   try {
     const { name } = req.query;
-    const lowerName = name.toLowerCase();
-    console.log(lowerName);
+
+    // console.log(lowerName);
     // console.log(name);
     const result = name
-      ? await searchPokemonByName(lowerName)
+      ? await searchPokemonByName(name)
       : await searchAllPokemons();
     // console.log(result);
     res
@@ -104,7 +104,9 @@ const createPokemonhandler = async (req, res) => {
     const { name } = req.body;
     res
       .status(500)
-      .json(responseMaper(true, `No se pudo crear el Pokemon: ${name}`, null));
+      .json(
+        responseMaper(true, `El Pokemon: ${name} ya existe en la Pokedex`, null)
+      );
   }
 };
 

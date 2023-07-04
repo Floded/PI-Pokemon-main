@@ -33,8 +33,9 @@ const searchAllPokemons = async () => {
 };
 
 const searchPokemonByName = async (name) => {
+  const lowerName = name.toLowerCase();
   const bddPokemon = await Pokemon.findOne({
-    where: { name: name },
+    where: { name: lowerName },
     include: {
       model: Type,
       attributes: ["id", "name"],
@@ -48,7 +49,7 @@ const searchPokemonByName = async (name) => {
     return bddRes;
   } else {
     const findPokemon = (
-      await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`)
+      await axios.get(`https://pokeapi.co/api/v2/pokemon/${lowerName}`)
     ).data;
     const apiPokemon = cleanBy(findPokemon);
     return apiPokemon;
