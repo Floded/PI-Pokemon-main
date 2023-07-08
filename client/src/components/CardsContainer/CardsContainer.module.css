@@ -1,0 +1,8 @@
+.Container{
+    border: 3px solid green;
+    border-radius: 15px;
+    margin: 2px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
