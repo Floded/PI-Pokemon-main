@@ -21,6 +21,6 @@ export const getById = (id) => {
   return async function (dispatch) {
     const pokeData = await axios.get(`http://localhost:3001/pokemons/${id}`);
     const data = pokeData.data.data;
-    return { type: GET_BY_ID, payload: data };
+    dispatch({ type: GET_BY_ID, payload: data });
   };
 };
