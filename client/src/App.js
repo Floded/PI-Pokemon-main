@@ -5,7 +5,6 @@ import { useLocation } from "react-router-dom";
 
 import { Home, Form, Detail, Landing } from "./views";
 import NavBar from "./components/NavBar/NavBar";
-import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getType } from "./redux/actions";
