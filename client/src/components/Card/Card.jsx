@@ -15,7 +15,11 @@ const Card = ({ name, type, image, id }) => {
       <h2>{nameUperCase}</h2>
       <div>
         {type?.map((e) => {
-          return <span key={e.id}> {e.name} </span>;
+          return (
+            <span key={e.id} className={style.SpanContainer}>
+              {e.name}
+            </span>
+          );
         })}
       </div>
     </div>

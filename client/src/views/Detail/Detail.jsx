@@ -36,27 +36,33 @@ const Detail = () => {
       <div>
         <img src={pokemon.image} alt={pokemon.name} />
       </div>
-      <div>
-        <h4>Health: {pokemon.health}</h4>
-      </div>
-      <div>
-        <h4>Stroke: {pokemon.stroke}</h4>
-      </div>
-      <div>
-        <h4>Defending: {pokemon.defending}</h4>
-      </div>
-      <div>
-        <h4>Speed: {pokemon.speed}</h4>
-      </div>
-      <div>
-        <h4>Height: {pokemon.height}</h4>
-      </div>
-      <div>
-        <h4>Weight: {pokemon.weight}</h4>
+      <div className={style.InfoPokemon}>
+        <div>
+          <h4>Health: {pokemon.health}</h4>
+        </div>
+        <div>
+          <h4>Stroke: {pokemon.stroke}</h4>
+        </div>
+        <div>
+          <h4>Defending: {pokemon.defending}</h4>
+        </div>
+        <div>
+          <h4>Speed: {pokemon.speed}</h4>
+        </div>
+        <div>
+          <h4>Height: {pokemon.height}</h4>
+        </div>
+        <div>
+          <h4>Weight: {pokemon.weight}</h4>
+        </div>
       </div>
       <div>
         {pokemon.types?.map((e) => {
-          return <span key={e.id}> {e.name} </span>;
+          return (
+            <span key={e.id} className={style.SpanContainer}>
+              {e.name}
+            </span>
+          );
         })}
       </div>
     </div>

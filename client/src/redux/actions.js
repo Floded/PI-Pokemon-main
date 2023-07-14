@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_ALL_POKEMON, GET_ALL_TYPE, GET_BY_ID } from "./type";
+import { GET_ALL_POKEMON, GET_ALL_TYPE, GET_BY_ID, GET_BY_NAME } from "./type";
 
 export const getAllPokemon = () => {
   return async function (dispatch) {
@@ -22,5 +22,16 @@ export const getById = (id) => {
     const pokeData = await axios.get(`http://localhost:3001/pokemons/${id}`);
     const data = pokeData.data.data;
     dispatch({ type: GET_BY_ID, payload: data });
+  };
+};
+
+export const getByName = (name) => {
+  return async function (dispatch) {
+    const nameData = await axios.get(
+      `http://localhost:3001/pokemons?name=${name}`
+    );
+    // console.log(name);
+    const data = nameData.data.data;
+    dispatch({ type: GET_BY_NAME, payload: data });
   };
 };
