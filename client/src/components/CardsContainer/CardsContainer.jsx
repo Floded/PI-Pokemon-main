@@ -6,12 +6,12 @@ import style from "./CardsContainer.module.css";
 const CardsContainer = (props) => {
   const { pokeName } = props;
   const [current, setCurrent] = useState(0);
+  const [filterSelected, setfilterSelected] = useState(0);
   const [filterTypeSelected, setFilterTypeSelected] = useState(0);
-  // const [oldListPokemons, setoldListPokemons] = useState([]);
 
   let listOfPokemons = useSelector((state) => state.pokemon);
 
-  let listOldPokemon = useSelector((state) => state.oldPokemon);
+  let listOfType = useSelector((state) => state.types);
 
   // Paginado ******
   const PaginationPokemon = () => {
@@ -28,38 +28,67 @@ const CardsContainer = (props) => {
     }
   };
 
-  const onChangeTypeSelector = (evt) => {
-    const typeSelectedId = Number(evt.target.value);
-    setFilterTypeSelected(typeSelectedId);
-    filterByTypeSelected(typeSelectedId);
+  const onChangeNameAndAtackSelected = (event) => {
+    const selectedId = Number(event.target.value);
+    setfilterSelected(selectedId);
+    filterByNameAndAtackSelected(selectedId);
   };
 
-  const filterByTypeSelected = (typeSelected) => {
+  const onChangeTypeSelected = (event) => {
+    const typeSelectedId = event.target.value;
+    const typeSelectedStr = typeSelectedId.toString();
+    console.log(typeSelectedStr);
+    setFilterTypeSelected(typeSelectedStr);
+    filterByTypeSelected(typeSelectedStr);
+  };
+
+  // Metodo de ordenamiento por Nombre y ataque
+
+  const filterByNameAndAtackSelected = (Selected) => {
     // Seleccione que sean todos
-    // if (typeSelected === 0) {
-    //   // Volver a poner los valores del array inicial
-    //   const noOrder = listOldPokemon;
-    //   console.log(noOrder);
-    //   return noOrder;
-    // }
+    if (Selected === 0) {
+      // Volver a poner los valores del array inicial
+      listOfPokemons.sort((pokemonA, pokemonB) =>
+        pokemonA.id > pokemonB.id ? 1 : -1
+      );
+    }
     // Seleccione que sean Ascendentes
-    if (typeSelected === 1) {
-      // Realizar el filtrado por el tipo y que se organicen ascendentemente
+    if (Selected === 1) {
+      //Ralizar el ordenamiento de A - Z y que se organicen descentendemente
       listOfPokemons.sort((pokemonA, pokemonB) =>
         pokemonA.name > pokemonB.name ? 1 : -1
       );
     }
 
     // Seleccione que sean Descendentes
-    if (typeSelected === 2) {
-      // Ralizar el filtrado por el tipo y que se orvanicen descentendemente
+    if (Selected === 2) {
+      // Ralizar el ordenamiento de Z - A y que se organicen descentendemente
       listOfPokemons = listOfPokemons.sort((pokemonA, pokemonB) =>
         pokemonA.name < pokemonB.name ? 1 : -1
       );
     }
+
+    //Seleccione que posean mas poder de ataque
+    if (Selected === 3) {
+      // Realizar el ordenamiento por mayor poder de ataque
+      listOfPokemons = listOfPokemons.sort((pokemonA, pokemonB) =>
+        pokemonA.stroke < pokemonB.stroke ? 1 : -1
+      );
+    }
+    if (Selected === 4) {
+      listOfPokemons = listOfPokemons.sort((pokemonA, pokemonB) =>
+        pokemonA.stroke > pokemonB.stroke ? 1 : -1
+      );
+    }
   };
 
-  console.log(listOldPokemon);
+  const filterByTypeSelected = (typeSelected) => {
+    const normal = listOfPokemons?.filter(
+      (pokemon) => pokemon.types[0].name === typeSelected
+    );
+    console.log(normal);
+    return normal;
+  };
 
   // Paginado *****
 
@@ -67,11 +96,26 @@ const CardsContainer = (props) => {
     <div>
       <div className={style.filterContainer}>
         <div>
-          <label>Ordernar: </label>
-          <select value={filterTypeSelected} onChange={onChangeTypeSelector}>
-            <option value={0}>Todos</option>
-            <option value={1}>Ascendente</option>
-            <option value={2}>Descendente</option>
+          <label>Order by : </label>
+          <select
+            value={filterSelected}
+            onChange={onChangeNameAndAtackSelected}
+          >
+            <option value={0}>All</option>
+            <option value={1}>Ascendent</option>
+            <option value={2}>Descendent</option>
+            <option value={3}>Atack +</option>
+            <option value={4}>Atack -</option>
+          </select>
+          <br />
+          <label> Order by Type : </label>
+          <select value={filterTypeSelected} onChange={onChangeTypeSelected}>
+            <option value={0}>All </option>
+            {listOfType.map((type) => (
+              <option key={type.id} value={type.name}>
+                {type.name}
+              </option>
+            ))}
           </select>
         </div>
       </div>

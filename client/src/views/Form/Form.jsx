@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { postCreate } from "../../redux/actions";
 import { useSelector } from "react-redux";
+import { postCreate } from "../../redux/actions";
 // import style from "./Form.module.css";
 
 const Form = () => {
@@ -13,7 +13,7 @@ const Form = () => {
     speed: "",
     height: "",
     weight: "",
-    type: "",
+    type: [],
   });
 
   // const [types, setTypes] = useState([]);
@@ -27,7 +27,7 @@ const Form = () => {
     speed: "",
     height: "",
     weight: "",
-    type: "",
+    type: [],
   });
 
   const types = useSelector((state) => state.types);
@@ -45,12 +45,13 @@ const Form = () => {
     // console.log(value);
     validate({ ...form, [name]: value });
     setForm({ ...form, [name]: value });
+    setForm({ ...form, type: [value] });
   };
 
   const submitHandler = async (event) => {
     event.preventDefault();
-    const typeSplitted = form.type.split(",").map((ty) => ty.trim());
-    form.type = typeSplitted;
+    // const typeSplitted =
+    // console.log(typeSplitted);
     postCreate(form);
   };
 
@@ -75,7 +76,7 @@ const Form = () => {
       <div>
         <label htmlFor="">Image </label>
         <input
-          type="file"
+          type="text"
           name="image"
           value={form.image}
           onChange={handleChange}
