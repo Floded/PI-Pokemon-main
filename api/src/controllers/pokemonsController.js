@@ -13,6 +13,7 @@ const searchAllPokemons = async () => {
   const res = (await axios.get(END_POINT)).data.results;
   const resPromises = res.map(async (pokemon) => {
     const res = (await axios.get(pokemon.url)).data;
+    // console.log(res);
     return res;
   });
   const results = await Promise.all(resPromises);

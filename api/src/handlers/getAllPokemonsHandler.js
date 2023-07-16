@@ -25,7 +25,7 @@ const getAllPokeHandler = async (req, res) => {
       );
   } catch (error) {
     const { name } = req.query;
-    const lowerName = name.toLowerCase();
+    const lowerName = name?.toLowerCase();
     console.log(lowerName);
     res
       .status(404)
