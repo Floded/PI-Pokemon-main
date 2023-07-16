@@ -1,11 +1,10 @@
 import "./App.css";
-import axios from "axios";
 import { Route } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 import { Home, Form, Detail, Landing } from "./views";
 import NavBar from "./components/NavBar/NavBar";
-import { useEffect } from "react";
+import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getType } from "./redux/actions";
 
@@ -16,9 +15,7 @@ function App() {
 
   const pokeName = useSelector((state) => state.pokemonName);
 
-  // console.log(pokeName);
-
-  useEffect(() => {
+  useMemo(() => {
     dispatch(getType());
   }, [dispatch]);
 

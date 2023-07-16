@@ -7,3 +7,11 @@
     flex-direction: row;
     flex-wrap: wrap;
 }
+
+.filterContainer{
+    display: flex;
+    padding: 16px;
+}
+.filterButtonContainer{
+    margin-left: 16px;
+}

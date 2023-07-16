@@ -1,29 +1,25 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import Card from "../Card/Card";
 import style from "./CardsContainer.module.css";
-import { useSelector } from "react-redux";
 
 const CardsContainer = (props) => {
   const { pokeName } = props;
   const [current, setCurrent] = useState(0);
-  // const [pokeState, setPokeState] = useState([]);
+  const [filterTypeSelected, setFilterTypeSelected] = useState(0);
+  // const [oldListPokemons, setoldListPokemons] = useState([]);
 
-  const pokemon = useSelector((state) => state.pokemon);
+  let listOfPokemons = useSelector((state) => state.pokemon);
 
-  // console.log(pokeName);
-  // console.log(pokemon);
-
-  // console.log(pokeState);
+  let listOldPokemon = useSelector((state) => state.oldPokemon);
 
   // Paginado ******
   const PaginationPokemon = () => {
-    // console.log(obj.name);
-    return pokemon.slice(current, current + 12);
-    // else pokemon.filter((poke) => console.log(poke.name === obj.name));
+    return listOfPokemons.slice(current, current + 12);
   };
 
   const nextPage = () => {
-    if (pokemon.length > current + 12) setCurrent(current + 12);
+    if (listOfPokemons.length > current + 12) setCurrent(current + 12);
   };
 
   const prevPage = () => {
@@ -31,18 +27,53 @@ const CardsContainer = (props) => {
       setCurrent(current - 12);
     }
   };
+
+  const onChangeTypeSelector = (evt) => {
+    const typeSelectedId = Number(evt.target.value);
+    setFilterTypeSelected(typeSelectedId);
+    filterByTypeSelected(typeSelectedId);
+  };
+
+  const filterByTypeSelected = (typeSelected) => {
+    // Seleccione que sean todos
+    // if (typeSelected === 0) {
+    //   // Volver a poner los valores del array inicial
+    //   const noOrder = listOldPokemon;
+    //   console.log(noOrder);
+    //   return noOrder;
+    // }
+    // Seleccione que sean Ascendentes
+    if (typeSelected === 1) {
+      // Realizar el filtrado por el tipo y que se organicen ascendentemente
+      listOfPokemons.sort((pokemonA, pokemonB) =>
+        pokemonA.name > pokemonB.name ? 1 : -1
+      );
+    }
+
+    // Seleccione que sean Descendentes
+    if (typeSelected === 2) {
+      // Ralizar el filtrado por el tipo y que se orvanicen descentendemente
+      listOfPokemons = listOfPokemons.sort((pokemonA, pokemonB) =>
+        pokemonA.name < pokemonB.name ? 1 : -1
+      );
+    }
+  };
+
+  console.log(listOldPokemon);
+
   // Paginado *****
 
   return (
     <div>
-      <div>
-        <button>
-          <span>Asendent</span>
-        </button>
-        &nbsp;
-        <button>
-          <span>Desendent</span>
-        </button>
+      <div className={style.filterContainer}>
+        <div>
+          <label>Ordernar: </label>
+          <select value={filterTypeSelected} onChange={onChangeTypeSelector}>
+            <option value={0}>Todos</option>
+            <option value={1}>Ascendente</option>
+            <option value={2}>Descendente</option>
+          </select>
+        </div>
       </div>
       <div>
         <button onClick={prevPage}>

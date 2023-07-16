@@ -1,7 +1,7 @@
 import SearchBar from "../SearchBar/SearchBar";
 import style from "../NavBar/NavBar.module.css";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getByName } from "../../redux/actions";
 
@@ -15,7 +15,7 @@ const NavBar = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  useMemo(() => {
     dispatch(getByName(search));
   }, [dispatch, search]);
 

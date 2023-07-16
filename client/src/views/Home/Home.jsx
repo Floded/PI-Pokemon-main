@@ -1,7 +1,7 @@
-import { useDispatch } from "react-redux";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import CardsContainer from "../../components/CardsContainer/CardsContainer";
-import { getAllPokemon, getType } from "../../redux/actions";
+import { getAllPokemon, getOldPokemon, getType } from "../../redux/actions";
 // import { FilterBar } from "../../components/FilterBar/FilterBar";
 
 const Home = (props) => {
@@ -10,6 +10,7 @@ const Home = (props) => {
   // // Cuando se monte, debe hacer el dispatch,
   useEffect(() => {
     dispatch(getAllPokemon());
+    dispatch(getOldPokemon());
     dispatch(getType());
   }, [dispatch]);
 

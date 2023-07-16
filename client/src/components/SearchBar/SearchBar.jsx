@@ -1,10 +1,7 @@
 import { useState } from "react";
 import style from "./SearchBar.module.css";
-import { useDispatch } from "react-redux";
-import { getAllPokemon } from "../../redux/actions";
 
 const SearchBar = ({ sendProp }) => {
-  const dispatch = useDispatch();
   const [search, setSearch] = useState("");
 
   const handleInputChange = (e) => {
