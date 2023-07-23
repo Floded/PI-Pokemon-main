@@ -9,8 +9,6 @@ const CardsContainer = () => {
 
   let listOfPokemons = useSelector((state) => state.pokemon);
 
-  let searchPokemonByName = useSelector((state) => state.pokemonName);
-
   let listOfType = useSelector((state) => state.types);
 
   // filter function
@@ -43,7 +41,6 @@ const CardsContainer = () => {
   });
 
   // fn() de filtrado
-
   const handleTypeCheck = (event) => {
     // console.log(event.target.name);
     // cambia el parametro del estado selecionado a true
@@ -52,19 +49,31 @@ const CardsContainer = () => {
       [event.target.name]: event.target.checked,
     });
     // Si este es true iniciamos la logica
-    if (event.target.checked) {
-      const filteredPokemons = listOfPokemons?.filter((poke) =>
-        poke.types?.map((type) => type.name).includes(event.target.name)
-      );
-      // console.log(filteredPokemons);
-      setFilterPokeType([...filterPokeType, ...filteredPokemons]);
-    }
-    if (event.target.checked) {
-      const filterBddPokemon = listOfPokemons.filter(
+    // Filtrado por API
+    if (event.target.name === "api") {
+      const filteredPokemons = listOfPokemons.filter(
         (pokemon) => pokemon.created
       );
-      console.log(filterBddPokemon);
+      setFilterPokeType([...filterPokeType, ...filteredPokemons]);
+      console.log(filteredPokemons);
     }
+
+    // Filtrado por BDD
+    // if (event.target.name === "bdd") {
+    //   const filteredPokemons = listOfPokemons.filter(
+    //     (pokemon) => pokemon.created === true
+    //   );
+    //   console.log(filteredPokemons);
+    //   setFilterPokeType([...filterPokeType, ...filteredPokemons]);
+    // }
+    // if (event.target.checked) {
+    //   const filteredPokemons = listOfPokemons?.filter((poke) =>
+    //     poke.types?.map((type) => type.name).includes(event.target.name)
+    //   );
+    //   console.log(filteredPokemons);
+    //   setFilterPokeType([...filterPokeType, ...filteredPokemons]);
+    // }
+
     // de lo contrario
     else {
       const filteredPokemons = filterPokeType?.filter(
@@ -122,8 +131,11 @@ const CardsContainer = () => {
       );
     }
   };
+
+  console.log(filterPokeType);
   // Paginado ******
   const PaginationPokemon = (type) => {
+    console.log(type);
     if (type.length > 0) {
       // Limpiamos el array de elementos repetidos
       const typeClear = new Set(type);
@@ -182,54 +194,62 @@ const CardsContainer = () => {
                 </div>
               );
             })}
-            <input
-              type="checkbox"
-              name="bdd"
-              id="BDD"
-              onChange={handleTypeCheck}
-            />
-            <label htmlFor="BDD">BDD</label>
-            <input
-              type="checkbox"
-              name="api"
-              id="API"
-              onChange={handleTypeCheck}
-            />
-            <label htmlFor="API">API</label>
+            <div className={style.GroupType}>
+              <input
+                type="checkbox"
+                name="bdd"
+                id="BDD"
+                onChange={handleTypeCheck}
+              />
+              <label htmlFor="BDD">BDD</label>
+            </div>
+            <div className={style.GroupType}>
+              <input
+                type="checkbox"
+                name="api"
+                id="API"
+                onChange={handleTypeCheck}
+              />
+              <label htmlFor="API">API</label>
+            </div>
           </div>
         </div>
       </div>
-      <div className={style.NextPrevButon}>
-        <button onClick={prevPage} className={style.ButtonPrev}>
-          <span>&lt; Prev</span>
-        </button>
-        &nbsp;
-        <button onClick={nextPage} className={style.ButtonNext}>
-          <span>Next &gt;</span>
-        </button>
-      </div>
+      {listOfPokemons.length >= 12 ? (
+        <div className={style.NextPrevButon}>
+          <button onClick={prevPage} className={style.ButtonPrev}>
+            <span>&lt; Prev</span>
+          </button>
+          &nbsp;
+          <button onClick={nextPage} className={style.ButtonNext}>
+            <span>Next &gt;</span>
+          </button>
+        </div>
+      ) : undefined}
       <div className={style.Container}>
-        {searchPokemonByName.name === undefined ? (
-          PaginationPokemon(filterPokeType).map((poke) => {
-            return (
-              <Card
-                key={poke.id}
-                id={poke.id}
-                name={poke.name}
-                image={poke.image}
-                type={poke.types}
-              />
-            );
-          })
-        ) : (
-          <Card
-            key={searchPokemonByName.id}
-            id={searchPokemonByName.id}
-            name={searchPokemonByName.name}
-            image={searchPokemonByName.image}
-            type={searchPokemonByName.types}
-          />
-        )}
+        {listOfPokemons.length < 12
+          ? listOfPokemons.map((pokemon) => {
+              return (
+                <Card
+                  key={pokemon.id}
+                  id={pokemon.id}
+                  name={pokemon.name}
+                  image={pokemon.image}
+                  type={pokemon.types}
+                />
+              );
+            })
+          : PaginationPokemon(filterPokeType).map((poke) => {
+              return (
+                <Card
+                  key={poke.id}
+                  id={poke.id}
+                  name={poke.name}
+                  image={poke.image}
+                  type={poke.types}
+                />
+              );
+            })}
       </div>
     </div>
   );

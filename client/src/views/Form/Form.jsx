@@ -23,17 +23,17 @@ const Form = () => {
 
   // const [types, setTypes] = useState([]);
 
-  const [error, setError] = useState({
-    name: "",
-    image: "",
-    health: "",
-    stroke: "",
-    defending: "",
-    speed: "",
-    height: "",
-    weight: "",
-    type: "",
-  });
+  // const [error, setError] = useState({
+  //   name: "",
+  //   image: "",
+  //   health: "",
+  //   stroke: "",
+  //   defending: "",
+  //   speed: "",
+  //   height: "",
+  //   weight: "",
+  //   type: "",
+  // });
 
   const types = useSelector((state) => state.types);
 
@@ -82,7 +82,7 @@ const Form = () => {
           value={form.name}
           onChange={handleChange}
         />
-        {error.name && <span>{error.name}</span>}
+        {/* {error.name && <span>{error.name}</span>} */}
       </div>
       <div>
         <label>Image </label>

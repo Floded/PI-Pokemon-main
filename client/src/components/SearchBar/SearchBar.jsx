@@ -1,39 +1,27 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { getAllPokemon, getByName } from "../../redux/actions";
 import style from "./SearchBar.module.css";
 
-const SearchBar = ({ sendProp }) => {
+const SearchBar = () => {
   const [search, setSearch] = useState("");
-  // const [original, setOriginal] = useState([]);
 
-  const namePokemon = useSelector((state) => state.oldPokemon);
-  // console.log(namePokemon);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const handleInputChange = (e) => {
     const { value } = e.target;
-    // console.log(value);
-    if (value.length === 0) {
-      console.log([...namePokemon]);
+    if (value === "") {
+      dispatch(getAllPokemon());
     }
     setSearch(value);
-    // setSearch(value);
   };
 
-  // const nombreDefinitivo = namePokemon.map((nombre) => nombre.name);
-
-  // dispatch(getByName());
-
-  const addStateOnSendProp = () => {
+  const onClickSearch = () => {
     if (search.length > 0) {
-      console.log(search);
-      sendProp(search);
-      // setSearch("");
+      dispatch(getByName(search));
     }
-    // alert("Write the full name");
   };
 
-  // console.log(search);
   return (
     <div className={style.Container}>
       <div>
@@ -45,7 +33,7 @@ const SearchBar = ({ sendProp }) => {
         />
       </div>
       <div>
-        <button onClick={() => addStateOnSendProp()}>
+        <button onClick={() => onClickSearch()}>
           <span className={style.SpanButton}>Search</span>
         </button>
       </div>

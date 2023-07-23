@@ -1,25 +1,8 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { getByName } from "../../redux/actions";
 import style from "../NavBar/NavBar.module.css";
 import SearchBar from "../SearchBar/SearchBar";
 
 const NavBar = () => {
-  const [search, setSearch] = useState("");
-  const sendProp = (message) => {
-    if (message) setSearch(message);
-  };
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    // if (!search) {
-    //   console.log("No hay Poke");
-    // }
-    dispatch(getByName(search));
-  }, [dispatch, search]);
-
   return (
     <div className={style.Container}>
       <div className={style.ImgContainer}>
@@ -34,7 +17,7 @@ const NavBar = () => {
       <Link to="/create" className={style.Links}>
         FORM
       </Link>
-      <SearchBar sendProp={sendProp} />
+      <SearchBar />
     </div>
   );
 };

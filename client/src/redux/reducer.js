@@ -12,7 +12,6 @@ const initialState = {
   oldPokemon: [],
   types: [],
   pokemonId: [],
-  pokemonName: [],
   pokemonCreated: [],
 };
 
@@ -27,7 +26,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case GET_BY_ID:
       return { ...state, pokemonId: payload };
     case GET_BY_NAME:
-      return { ...state, pokemonName: payload };
+      return { ...state, pokemon: [payload] };
     case POST_CREATE:
       return { ...state, pokemonCreated: payload };
     default:
