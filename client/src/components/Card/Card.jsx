@@ -6,27 +6,31 @@ const Card = ({ name, type, image, id }) => {
   const nameUperCase = toUperCaseStr(name);
   // console.log(props.id);
   return (
-    <div className={style.Container}>
-      <Link to={`/detail/${id}`}>
-        <img
-          src={image}
-          // srcSet="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjfGpoWxmViiuy7T_f8HJ6Qev48doLDrnaDw&usqp=CAU"
-          alt="not found"
-        />
-      </Link>
-      <br />
-      <span>Nº {id}</span>
-      <h2>{nameUperCase}</h2>
-      <div>
-        {type?.map((e) => {
-          return (
-            <span key={e.id} className={style.SpanContainer}>
-              {e.name}
-            </span>
-          );
-        })}
+    <Link to={`/detail/${id}`} className={style.LinkContainer}>
+      <div className={style.Container}>
+        <div>
+          <span className={style.NumberOfPokemon}>Nº {id}</span>
+        </div>
+        <div>
+          <img src={image} alt="not found" />
+        </div>
+        <br />
+
+        <div className={style.TypeContainer}>
+          {type?.map((e) => {
+            const nameType = e.name;
+            return (
+              <span key={e.id} className={style.SpanContainer}>
+                {nameType}
+              </span>
+            );
+          })}
+        </div>
+        <div>
+          <h2 className={style.NameOfPokemon}>{nameUperCase}</h2>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

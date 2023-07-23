@@ -3,46 +3,87 @@ import { useSelector } from "react-redux";
 import Card from "../Card/Card";
 import style from "./CardsContainer.module.css";
 
-const CardsContainer = (props) => {
-  const { pokeName } = props;
+const CardsContainer = () => {
+  // console.log(searchPokemonByName.name === "" ? "vacio" : "pokemon");
   const [current, setCurrent] = useState(0);
-  const [filterSelected, setfilterSelected] = useState(0);
-  const [filterTypeSelected, setFilterTypeSelected] = useState(0);
 
   let listOfPokemons = useSelector((state) => state.pokemon);
 
+  let searchPokemonByName = useSelector((state) => state.pokemonName);
+
   let listOfType = useSelector((state) => state.types);
 
-  // Paginado ******
-  const PaginationPokemon = () => {
-    return listOfPokemons.slice(current, current + 12);
-  };
+  // filter function
+  // Seteamos un estado para guardar los resultados
+  const [filterPokeType, setFilterPokeType] = useState([]);
+  // Seteamos otro estado para manejar los checkbox
+  const [typeSelected, setTypeSelected] = useState({
+    grass: false,
+    normal: false,
+    fighting: false,
+    flying: false,
+    poison: false,
+    ground: false,
+    rock: false,
+    bug: false,
+    ghost: false,
+    steel: false,
+    fire: false,
+    water: false,
+    electric: false,
+    psychic: false,
+    ice: false,
+    dragon: false,
+    dark: false,
+    fairy: false,
+    unknow: false,
+    shadow: false,
+    bdd: false,
+    api: false,
+  });
 
-  const nextPage = () => {
-    if (listOfPokemons.length > current + 12) setCurrent(current + 12);
-  };
+  // fn() de filtrado
 
-  const prevPage = () => {
-    if (current > 0) {
-      setCurrent(current - 12);
+  const handleTypeCheck = (event) => {
+    // console.log(event.target.name);
+    // cambia el parametro del estado selecionado a true
+    setTypeSelected({
+      ...typeSelected,
+      [event.target.name]: event.target.checked,
+    });
+    // Si este es true iniciamos la logica
+    if (event.target.checked) {
+      const filteredPokemons = listOfPokemons?.filter((poke) =>
+        poke.types?.map((type) => type.name).includes(event.target.name)
+      );
+      // console.log(filteredPokemons);
+      setFilterPokeType([...filterPokeType, ...filteredPokemons]);
+    }
+    if (event.target.checked) {
+      const filterBddPokemon = listOfPokemons.filter(
+        (pokemon) => pokemon.created
+      );
+      console.log(filterBddPokemon);
+    }
+    // de lo contrario
+    else {
+      const filteredPokemons = filterPokeType?.filter(
+        (poke) =>
+          !poke.types?.map((type) => type.name).includes(event.target.name)
+      );
+      // console.log(filteredPokemons);
+      setFilterPokeType([...filteredPokemons]);
     }
   };
+
+  // Metodo de ordenamiento por Nombre y ataque
+  const [filterSelected, setfilterSelected] = useState(0);
 
   const onChangeNameAndAtackSelected = (event) => {
     const selectedId = Number(event.target.value);
     setfilterSelected(selectedId);
     filterByNameAndAtackSelected(selectedId);
   };
-
-  const onChangeTypeSelected = (event) => {
-    const typeSelectedId = event.target.value;
-    const typeSelectedStr = typeSelectedId.toString();
-    console.log(typeSelectedStr);
-    setFilterTypeSelected(typeSelectedStr);
-    filterByTypeSelected(typeSelectedStr);
-  };
-
-  // Metodo de ordenamiento por Nombre y ataque
 
   const filterByNameAndAtackSelected = (Selected) => {
     // Seleccione que sean todos
@@ -81,13 +122,28 @@ const CardsContainer = (props) => {
       );
     }
   };
+  // Paginado ******
+  const PaginationPokemon = (type) => {
+    if (type.length > 0) {
+      // Limpiamos el array de elementos repetidos
+      const typeClear = new Set(type);
+      let result = [...typeClear];
 
-  const filterByTypeSelected = (typeSelected) => {
-    const normal = listOfPokemons?.filter(
-      (pokemon) => pokemon.types[0].name === typeSelected
-    );
-    console.log(normal);
-    return normal;
+      // Retornamos dicho array limpio
+      return result.slice(current, current + 12);
+    }
+    // Si no hay filtros retornamos el array global
+    return listOfPokemons.slice(current, current + 12);
+  };
+
+  const nextPage = () => {
+    if (listOfPokemons.length > current + 12) setCurrent(current + 12);
+  };
+
+  const prevPage = () => {
+    if (current > 0) {
+      setCurrent(current - 12);
+    }
   };
 
   // Paginado *****
@@ -95,7 +151,7 @@ const CardsContainer = (props) => {
   return (
     <div>
       <div className={style.filterContainer}>
-        <div>
+        <div className={style.OrderContainer}>
           <label>Order by : </label>
           <select
             value={filterSelected}
@@ -108,29 +164,53 @@ const CardsContainer = (props) => {
             <option value={4}>Atack -</option>
           </select>
           <br />
-          <label> Order by Type : </label>
-          <select value={filterTypeSelected} onChange={onChangeTypeSelected}>
-            <option value={0}>All </option>
-            {listOfType.map((type) => (
-              <option key={type.id} value={type.name}>
-                {type.name}
-              </option>
-            ))}
-          </select>
+        </div>
+        <div className={style.TypeOrder}>
+          <div className={style.FilterTypeContainer}>
+            {/* <button>Abrir</button> */}
+            <span>Filter by </span>
+            {listOfType.map((type) => {
+              return (
+                <div key={type.id} className={style.GroupType}>
+                  <input
+                    type="checkbox"
+                    name={type.name}
+                    id={type.id}
+                    onChange={handleTypeCheck}
+                  />
+                  <label htmlFor={type.name}>{type.name}</label>
+                </div>
+              );
+            })}
+            <input
+              type="checkbox"
+              name="bdd"
+              id="BDD"
+              onChange={handleTypeCheck}
+            />
+            <label htmlFor="BDD">BDD</label>
+            <input
+              type="checkbox"
+              name="api"
+              id="API"
+              onChange={handleTypeCheck}
+            />
+            <label htmlFor="API">API</label>
+          </div>
         </div>
       </div>
-      <div>
-        <button onClick={prevPage}>
+      <div className={style.NextPrevButon}>
+        <button onClick={prevPage} className={style.ButtonPrev}>
           <span>&lt; Prev</span>
         </button>
         &nbsp;
-        <button onClick={nextPage}>
+        <button onClick={nextPage} className={style.ButtonNext}>
           <span>Next &gt;</span>
         </button>
       </div>
       <div className={style.Container}>
-        {pokeName.name === undefined ? (
-          PaginationPokemon(pokeName).map((poke) => {
+        {searchPokemonByName.name === undefined ? (
+          PaginationPokemon(filterPokeType).map((poke) => {
             return (
               <Card
                 key={poke.id}
@@ -143,11 +223,11 @@ const CardsContainer = (props) => {
           })
         ) : (
           <Card
-            key={pokeName.id}
-            id={pokeName.id}
-            name={pokeName.name}
-            image={pokeName.image}
-            type={pokeName.types}
+            key={searchPokemonByName.id}
+            id={searchPokemonByName.id}
+            name={searchPokemonByName.name}
+            image={searchPokemonByName.image}
+            type={searchPokemonByName.types}
           />
         )}
       </div>

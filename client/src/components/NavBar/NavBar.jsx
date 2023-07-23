@@ -1,9 +1,9 @@
-import SearchBar from "../SearchBar/SearchBar";
-import style from "../NavBar/NavBar.module.css";
-import { Link } from "react-router-dom";
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { getByName } from "../../redux/actions";
+import style from "../NavBar/NavBar.module.css";
+import SearchBar from "../SearchBar/SearchBar";
 
 const NavBar = () => {
   const [search, setSearch] = useState("");
@@ -11,18 +11,29 @@ const NavBar = () => {
     if (message) setSearch(message);
   };
 
-  // console.log(search);
-
   const dispatch = useDispatch();
 
-  useMemo(() => {
+  useEffect(() => {
+    // if (!search) {
+    //   console.log("No hay Poke");
+    // }
     dispatch(getByName(search));
   }, [dispatch, search]);
 
   return (
     <div className={style.Container}>
-      <Link to="/home">HOME</Link>
-      <Link to="/create">FORM</Link>
+      <div className={style.ImgContainer}>
+        <img
+          src="https://www.pokemon.com/static-assets/app/static3/img/og-default-image.jpeg"
+          alt=""
+        />
+      </div>
+      <Link to="/home" className={style.Links}>
+        HOME
+      </Link>
+      <Link to="/create" className={style.Links}>
+        FORM
+      </Link>
       <SearchBar sendProp={sendProp} />
     </div>
   );

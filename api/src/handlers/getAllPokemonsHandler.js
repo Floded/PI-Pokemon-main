@@ -90,7 +90,7 @@ const createPokemonhandler = async (req, res) => {
       weight,
       type
     );
-    // console.log(newPokemon);
+    console.log(newPokemon);
     res
       .status(200)
       .json(

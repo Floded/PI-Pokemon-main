@@ -5,6 +5,7 @@ import {
   GET_BY_ID,
   GET_BY_NAME,
   GET_OLD_POKEMON,
+  POST_CREATE,
 } from "./type";
 
 export const getAllPokemon = () => {
@@ -45,13 +46,16 @@ export const getByName = (name) => {
       `http://localhost:3001/pokemons?name=${name}`
     );
     const data = nameData.data.data;
+
     dispatch({ type: GET_BY_NAME, payload: data });
   };
 };
 
-export const postCreate = async (form) => {
-  console.log(form);
-  const res = await axios.post("http://localhost:3001/pokemons", form);
-  console.log(res);
-  // dispatch({ type: POST_CREATE, payload: res });
+export const postCreate = (form) => {
+  return async function (dispatch) {
+    console.log(form);
+    const res = await axios.post("http://localhost:3001/pokemons/", form);
+    console.log(res.data);
+    dispatch({ type: POST_CREATE, payload: res });
+  };
 };

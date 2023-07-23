@@ -1,9 +1,33 @@
 .Container {
+    height: 50px;
+    width: 350px;
     display: flex;
+    justify-content: center;
     flex-direction: row;
     align-items: center;
 }
+
+
 .Container button {
     margin-left: 5px;
     margin-top: 3px;
+    height: 25px;
+    width: 60px;
+    border: 1px solid yellow;
+    background: #50578b;
+}
+
+.Container button:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 7px 25px 0 rgba(0,0,0,0.19);
+}
+
+.SpanButton{
+    color: #fff;
+    font-size: 14px;
+}
+
+.Container input {
+    width: 300px;
+    height: 20px;
+    border-radius: 17px;
 }

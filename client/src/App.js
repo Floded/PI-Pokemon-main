@@ -1,23 +1,11 @@
+import { Route, useLocation } from "react-router-dom";
 import "./App.css";
-import { Route } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 
-import { Home, Form, Detail, Landing } from "./views";
 import NavBar from "./components/NavBar/NavBar";
-import { useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getType } from "./redux/actions";
+import { Detail, Form, Home, Landing } from "./views";
 
 function App() {
-  // const [pokemonName, setPokemonName] = useState([]);
   const location = useLocation();
-  const dispatch = useDispatch();
-
-  const pokeName = useSelector((state) => state.pokemonName);
-
-  useMemo(() => {
-    dispatch(getType());
-  }, [dispatch]);
 
   return (
     <div className="App">
@@ -26,7 +14,7 @@ function App() {
         <Landing />
       </Route>
       <Route path="/home">
-        <Home pokeName={pokeName} />
+        <Home />
       </Route>
       <Route path="/detail/:id">
         <Detail />

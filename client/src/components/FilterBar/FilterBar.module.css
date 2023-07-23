@@ -1,9 +1,0 @@
-.ContainerFilter{
-    display: flex;
-}
-
-.filterByType{
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-}

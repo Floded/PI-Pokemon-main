@@ -1,0 +1,86 @@
+ .Container{
+    display: flex;
+    justify-content: center;
+    /* background: url(https://w0.peakpx.com/wallpaper/853/675/HD-wallpaper-fondo-de-pantalla-guay-pokemon.jpg) ; */
+    background: #f4edea;
+    /* background-size: cover; */
+    text-align: center;
+    position: relative;
+    /* color: aliceblue; */
+    height: 100vh;
+    width: 100vw;
+}
+
+
+button{
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 70px;
+    height: 50px;
+    width: 150px;
+    background: #00a6fb;
+    color: white;
+    font-size: 20px;
+    font-weight: 400;
+    border: none;
+    cursor: pointer;
+    /* text-transform: uppercase; */
+    transition: .3s ease all;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.Button::after{
+    content: '';
+    position: absolute;
+    width: 160px;
+    height: 150px;
+    background: #d62828;
+    border-radius: 80px;
+    z-index: 10;
+    top: -150px;
+    transition: .3s ease-in-out all;
+}
+
+.Button:hover::after{
+    top: -40px;
+    color: #141414;
+}
+
+.Button span{
+    position: relative;
+    z-index: 100;
+    transition: .3s ease all;
+}
+
+.ButtonContain{
+    position: absolute;
+    top: 500px;
+}
+
+.Text{
+    position: relative;
+    left: 125px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    color: #12263a;
+       
+}
+
+.Text img {
+    height: 300px;
+    z-index: 20;
+}
+
+.PikaImg {
+    height: 250px;
+    position: relative;
+    left: 50px;
+    top: 200px;
+    z-index: 10;
+}
+
+

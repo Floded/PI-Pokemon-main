@@ -1,0 +1,5 @@
+.ContainerHome {
+    background: url(https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/media/image/2016/08/187200-tipos-pokemon-maplerose.jpg?tf=3840x);
+    background-size: contain;
+    /* backdrop-filter: blur(10px); */
+}

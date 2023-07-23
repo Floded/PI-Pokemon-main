@@ -1,6 +1,22 @@
 .Container {
     display: flex;
+    position: sticky;
+    top: 0px;
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
+    border: 2px solid rgb(202, 185, 185);
+    background-color: #efefef;
+}
+
+.Container img {
+    height: 60px;
+    border-radius: 50px;
+    display: block;
+    margin-left: -90px;
+}
+
+.Links{
+    text-decoration: none;
+    color: blue;
 }
