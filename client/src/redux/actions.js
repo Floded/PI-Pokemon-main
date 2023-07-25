@@ -58,9 +58,15 @@ export const getByName = (name) => {
 
 export const postCreate = (form) => {
   return async function (dispatch) {
-    const res = (await axios.post("http://localhost:3001/pokemons/", form))
-      .data;
-    dispatch({ type: POST_CREATE, payload: res });
+    try {
+      const res = (await axios.post("http://localhost:3001/pokemons/", form))
+        .data;
+      dispatch({ type: POST_CREATE, payload: res.data });
+      alert(res.message);
+    } catch (error) {
+      const message = error.response.data.message;
+      alert(message);
+    }
   };
 };
 

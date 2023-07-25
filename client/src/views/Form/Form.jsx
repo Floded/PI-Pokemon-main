@@ -87,16 +87,14 @@ const Form = () => {
 
   const handleTypeChange = (event) => {
     const { id } = event.target;
-    console.log(id);
+
     setForm({ ...form, type: [...form.type, id] });
   };
 
   // se esta enviando con exito el formulario....
   const submitHandler = (event) => {
-    console.log(form);
     event.preventDefault();
     dispatch(postCreate(form));
-    alert("Pokemon created");
   };
 
   // solucionar la creacion del nuevo pokemon desde el action/redux

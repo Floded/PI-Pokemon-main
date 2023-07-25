@@ -30,7 +30,15 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case GET_BY_NAME:
       return { ...state, pokemon: [payload] };
     case POST_CREATE:
-      return { ...state, pokemonCreated: payload };
+      const pokemons = state.oldPokemon;
+      return {
+        ...state,
+        pokemon: [
+          ...pokemons,
+          payload,
+          /*la api nos podria devolver todos los pokemon o ver la forma de concatenarlo a los pokemon existentes */
+        ],
+      };
     case FILTER_BY_SOURCE_TYPE:
       return { ...state, pokemon: payload };
     case FILTER_BY_TYPE_NAME:
