@@ -1,38 +1,41 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { filterBySourceType, filterByTypeName } from "../../redux/actions";
 import Card from "../Card/Card";
 import style from "./CardsContainer.module.css";
 
 const CardsContainer = () => {
-  // const [listOfPokemons, setListOfPokemons] = useState([]);
   const [current, setCurrent] = useState(0);
-
-  let listOfPokemons = useSelector((state) => state.pokemon);
-
-  let listOfType = useSelector((state) => state.types);
-
-  const [typeSelect, setTypeSelect] = useState("");
-
-  const onChangeTypeSelect = (event) => {
-    const typeId = event.target.value;
-    setTypeSelect(typeId);
-    filterByType(typeId);
-  };
-
-  const filterByType = (Selected) => {
-    if (Selected) {
-      listOfPokemons.filter(
-        (pokemon) => pokemon.name
-        // pokemon.types?.map((type) => type.name).includes(Selected)
-      );
-      // console.log(listOfPokemons);
-      // return listOfPokemons;
-    }
-  };
-
-  // Metodo de ordenamiento por Nombre y ataque
   const [filterSelected, setfilterSelected] = useState(0);
   const [sourceTypeSelected, setSourceTypeSelected] = useState("");
+  const [typeSelect, setTypeSelect] = useState("");
+
+  const dispatch = useDispatch();
+
+  let listOfPokemons = useSelector((state) => state.pokemon);
+  let oldPokemon = useSelector((state) => state.oldPokemon);
+  let listOfType = useSelector((state) => state.types);
+
+  const onChangeTypeSelect = (event) => {
+    const typeName = event.target.value;
+    setTypeSelect(typeName);
+    // Call method to handle filter data
+    filterByType(typeName);
+  };
+
+  // This method is for handle filter by type selected
+  const filterByType = (typeName) => {
+    if (typeName === "all") {
+      // TODO: restaurar valor inicial del array
+      dispatch(filterByTypeName(oldPokemon));
+    } else {
+      // Enviar el valor filtrado al dispatch
+      const filterList = oldPokemon.filter((pokemon) =>
+        pokemon.types?.map((type) => type.name).includes(typeName)
+      );
+      dispatch(filterByTypeName(filterList));
+    }
+  };
 
   const onChangeOrderSelect = (event) => {
     const selectedId = Number(event.target.value);
@@ -43,13 +46,12 @@ const CardsContainer = () => {
   const onSourceTypeChange = (event) => {
     const sourceSelected = event.target.value;
     setSourceTypeSelected(sourceSelected);
+
     if (sourceSelected !== "") {
-      // Tiene que ser distinto de all
       filterByApiOrBdd(sourceSelected);
     } else {
-      // restaurar valores como al principio
+      dispatch(filterBySourceType(oldPokemon));
     }
-    //filterByOrder(sourceSelected);
   };
 
   const filterByOrder = (Selected) => {
@@ -90,19 +92,16 @@ const CardsContainer = () => {
   const filterByApiOrBdd = (sourceSelected) => {
     switch (sourceSelected) {
       case "api":
-        listOfPokemons = listOfPokemons = listOfPokemons.filter(
+        const apiList = oldPokemon.filter(
           (pokemonA) => pokemonA.created === false
         );
-        // console.log(listOfPokemons);
+        dispatch(filterBySourceType(apiList));
         break;
       case "bdd":
-        listOfPokemons = listOfPokemons = listOfPokemons.filter(
+        const bddList = oldPokemon.filter(
           (pokemonA) => pokemonA.created === true
         );
-        // console.log(listOfPokemons);
-        break;
-      default:
-        // Restaurar a los valores inciales
+        dispatch(filterBySourceType(bddList));
         break;
     }
   };

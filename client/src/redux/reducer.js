@@ -1,4 +1,6 @@
 import {
+  FILTER_BY_SOURCE_TYPE,
+  FILTER_BY_TYPE_NAME,
   GET_ALL_POKEMON,
   GET_ALL_TYPE,
   GET_BY_ID,
@@ -29,6 +31,10 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return { ...state, pokemon: [payload] };
     case POST_CREATE:
       return { ...state, pokemonCreated: payload };
+    case FILTER_BY_SOURCE_TYPE:
+      return { ...state, pokemon: payload };
+    case FILTER_BY_TYPE_NAME:
+      return { ...state, pokemon: payload };
     default:
       return { ...state };
   }

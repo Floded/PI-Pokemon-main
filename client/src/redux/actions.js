@@ -1,5 +1,7 @@
 import axios from "axios";
 import {
+  FILTER_BY_SOURCE_TYPE,
+  FILTER_BY_TYPE_NAME,
   GET_ALL_POKEMON,
   GET_ALL_TYPE,
   GET_BY_ID,
@@ -59,5 +61,17 @@ export const postCreate = (form) => {
     const res = (await axios.post("http://localhost:3001/pokemons/", form))
       .data;
     dispatch({ type: POST_CREATE, payload: res });
+  };
+};
+
+export const filterBySourceType = (newPokemons) => {
+  return function (dispatch) {
+    dispatch({ type: FILTER_BY_SOURCE_TYPE, payload: newPokemons });
+  };
+};
+
+export const filterByTypeName = (newPokemons) => {
+  return function (dispatch) {
+    dispatch({ type: FILTER_BY_TYPE_NAME, payload: newPokemons });
   };
 };
