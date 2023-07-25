@@ -1,4 +1,47 @@
 .ContainerForm {
+    /* display: flex; */
+    height: 100vh;
+    justify-content: center;
     background: url(https://media.istockphoto.com/id/1151507744/photo/modern-background.jpg?s=612x612&w=0&k=20&c=YZuo8VqBJM_tJn61ytNWyi843IeVejpHIr2avFZTiag=);
-    background-size: contain;
+    background-size: cover;
+}
+
+.DivFormContainer{
+    /* display: flex; */
+    /* background: #251351;
+    width: 600px;
+    height: 600px; */
+}
+
+.TitleForm {
+    /* color: blueviolet; */
+}
+
+.InputText{
+    /* display: flex;
+    margin: 20px;
+    color: white;
+    font-family: sans-serif;
+    gap:1rem;
+    align-items: center;
+    justify-content: center; */
+}
+
+.InputText input{
+    /* height: 20px; */
+}
+
+.InputName {
+    /* height: 40px; */
+}
+
+.InputCheck {
+    /* display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem; */
+}
+
+.InputCheck label{
+    /* color: white; */
 }

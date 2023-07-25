@@ -5,6 +5,7 @@
     background: url(https://e1.pxfuel.com/desktop-wallpaper/185/181/desktop-wallpaper-pokedex-iphone-pokedex.jpg);
     background-size: cover;
     border-radius: 8px;
+    box-shadow: 15px 15px 15px #888;
 }
 
 .LinkContainer {

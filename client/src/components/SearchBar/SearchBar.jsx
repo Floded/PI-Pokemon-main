@@ -32,7 +32,7 @@ const SearchBar = () => {
           onChange={handleInputChange}
         />
       </div>
-      <div>
+      <div className={style.btnContainer}>
         <button onClick={() => onClickSearch()}>
           <span className={style.SpanButton}>Search</span>
         </button>

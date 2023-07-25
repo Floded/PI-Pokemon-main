@@ -1,40 +1,84 @@
-.DetailContainer{
-    border: 3px solid green;
+.ContainerDetail{
+    position: absolute;
+    margin-left: 30px;
+    width: 100%;
+    height: 80vh;
+}
+
+
+.DetailInfo{
+    position: relative;
+    border: 3px solid pink;
+    font-size: 1.5rem;
+    
 }
 
 .BtnBack{
-    border: 3px solid red;
+    position: absolute;
+    background: #b04b63;
+    border: 1px solid beige;
+    box-shadow: 0 5px 15px #8888;
+    transform: translate(-50%, -50%);
+    bottom: 90%;
+    left: 90%;
+    height: 30px;
+    width: 70px;
 }
 
 .NumberOfPokemon{
-    border: 3px solid goldenrod;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translate(-50%, -50%);
+    top: 50px;
+    left: 38%;
+    font-size: 3rem;
+    font-weight: bold;
+    height: 110px;
+    width: 110px;
+    color: steelblue;
+    /* border: 3px solid goldenrod; */
+    /* border-radius: 50%; */
 }
 
 .NamePokemon{
-    display: block;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 20%;
+    left: 38%;
     width: 350px;
     height: 60px;
-    font-size: x-large;
-    border: 3px solid black;
+    font-size: 3rem;
 }
 
 .ImgContainer img{
-    position: relative;
-    right: 500px;
-    border: 4px solid sienna;
-    height: 300px;
+    position: absolute;
+    object-fit: contain;
+    transform: translate(-50%, -50%);
+    right: 15%;
+    top: 65%;
+    height: 70%;
+    width: 60%;
 }
 
-.InfoPokemon{
-    border: 5px solid violet;
-}
 
 .Info{
+    height: 45px;
     border: 3px solid blue;
 }
 
 .TypeInfo{
-    border: 3px solid yellowgreen;
+    position: absolute;
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    align-items: center;
+    transform: translate(-50%, -50%);
+    top: 100%;
+    left: 44%;
+    height: 40px;
+    width: 70px;
 }
 
 .SpanContainer{
@@ -42,4 +86,133 @@
     border-radius: 8px;
     padding: 5px 15px;
     margin: 5px;
+}
+
+
+
+/* Estilo de las STATS */
+
+.InfoPokemon{
+    width: 40%;
+    min-width: 590px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 70%;
+    top: 58%;
+
+
+   
+}
+
+.ContaninerGlobal{
+    width: 100%;
+    padding: 30px 30px 50px;
+    background: linear-gradient(450deg, #8ae1fc, #eaf8bf);
+    border: 2px solid black;
+    box-shadow: 0 20px 30px #8888;
+}
+
+.ContaninerGlobal * {
+    font-family: sans-serif;
+    font-weight: 500;
+}
+
+.InfoPokemon h3 {
+    margin-bottom: 50px;
+    letter-spacing: 2px;
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.Amount {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.Stats:not(:last-child){
+    margin-bottom: 30px;
+}
+
+.DetailStats{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.Menu{
+    position: relative;
+    border: 1px solid #274c77;
+    border-radius: 20px;
+}
+
+.Menu div {
+    position: relative;
+    width: 0;
+    height: 9px;
+    border-radius: 10px;
+    background: #0afa1e;
+}
+
+/* Animacion */
+
+.Health {
+    animation: health-bar 2s forwards;
+}
+
+@keyframes health-bar{
+    100%{
+        width: auto;
+    }
+}
+
+.Stroke {
+    animation: stroke-bar 2s forwards;
+}
+
+@keyframes stroke-bar{
+    100%{
+        width: auto;
+    }
+}
+
+.Defending {
+    animation: defending-bar 2s forwards;
+}
+
+@keyframes defending-bar{
+    100%{
+        width: auto;
+    }
+}
+
+.Speed {
+    animation: speed-bar 2s forwards;
+}
+
+@keyframes speed-bar{
+    100%{
+        width: auto;
+    }
+}
+
+.Height {
+    animation: height-bar 2s forwards;
+}
+
+@keyframes height-bar{
+    100%{
+        width: auto;
+    }
+}
+
+.Weight {
+    animation: weight-bar 2s forwards;
+}
+
+@keyframes weight-bar{
+    100%{
+        width: auto;
+    }
 }

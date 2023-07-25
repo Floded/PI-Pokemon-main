@@ -42,20 +42,22 @@ export const getById = (id) => {
 
 export const getByName = (name) => {
   return async function (dispatch) {
-    const nameData = await axios.get(
-      `http://localhost:3001/pokemons?name=${name}`
-    );
-    const data = nameData.data.data;
-
-    dispatch({ type: GET_BY_NAME, payload: data });
+    try {
+      const nameData = await axios.get(
+        `http://localhost:3001/pokemons?name=${name}`
+      );
+      const data = nameData.data.data;
+      dispatch({ type: GET_BY_NAME, payload: data });
+    } catch (error) {
+      alert(`EL pokemon ${name} no existe`);
+    }
   };
 };
 
 export const postCreate = (form) => {
   return async function (dispatch) {
-    console.log(form);
-    const res = await axios.post("http://localhost:3001/pokemons/", form);
-    console.log(res.data);
+    const res = (await axios.post("http://localhost:3001/pokemons/", form))
+      .data;
     dispatch({ type: POST_CREATE, payload: res });
   };
 };

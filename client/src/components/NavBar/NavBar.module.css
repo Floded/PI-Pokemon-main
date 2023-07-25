@@ -1,6 +1,5 @@
 .Container {
     display: flex;
-    position: sticky;
     top: 0px;
     flex-direction: row;
     align-items: center;

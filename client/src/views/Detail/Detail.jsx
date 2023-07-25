@@ -24,13 +24,7 @@ const Detail = () => {
   const pokemon = useSelector((state) => state.pokemonId);
 
   return (
-    <div>
-      <div className={style.DetailContainer}>
-        <h1>Detail to {pokemon.name}</h1>
-      </div>
-      <button onClick={backTo} className={style.BtnBack}>
-        <span>Back</span>
-      </button>
+    <div className={style.ContainerDetail}>
       <div className={style.NumberOfPokemon}>
         <span>Nº {pokemon.id}</span>
       </div>
@@ -41,23 +35,62 @@ const Detail = () => {
         <img src={pokemon.image} alt={pokemon.name} />
       </div>
       <div className={style.InfoPokemon}>
-        <div className={style.Info}>
-          <h4>Health: {pokemon.health}</h4>
-        </div>
-        <div className={style.Info}>
-          <h4>Stroke: {pokemon.stroke}</h4>
-        </div>
-        <div className={style.Info}>
-          <h4>Defending: {pokemon.defending}</h4>
-        </div>
-        <div className={style.Info}>
-          <h4>Speed: {pokemon.speed}</h4>
-        </div>
-        <div className={style.Info}>
-          <h4>Height: {pokemon.height}</h4>
-        </div>
-        <div className={style.Info}>
-          <h4>Weight: {pokemon.weight}</h4>
+        <div className={style.ContaninerGlobal}>
+          <h3>Stats</h3>
+          <div className={style.Stats}>
+            <div className={style.DetailStats}>
+              <span>Health</span>
+              <span className={style.Amount}>{pokemon.health}</span>
+            </div>
+            <div className={style.Menu}>
+              <div className={style.Health}></div>
+            </div>
+          </div>
+          <div className={style.Stats}>
+            <div className={style.DetailStats}>
+              <span>Stroke</span>
+              <span className={style.Amount}>{pokemon.stroke}</span>
+            </div>
+            <div className={style.Menu}>
+              <div className={style.Stroke}></div>
+            </div>
+          </div>
+          <div className={style.Stats}>
+            <div className={style.DetailStats}>
+              <span>Defense</span>
+              <span className={style.Amount}>{pokemon.defending}</span>
+            </div>
+            <div className={style.Menu}>
+              <div className={style.Defending}></div>
+            </div>
+          </div>
+          <div className={style.Stats}>
+            <div className={style.DetailStats}>
+              <span>Speed</span>
+              <span className={style.Amount}>{pokemon.speed}</span>
+            </div>
+            <div className={style.Menu}>
+              <div className={style.Speed}></div>
+            </div>
+          </div>
+          <div className={style.Stats}>
+            <div className={style.DetailStats}>
+              <span>Height</span>
+              <span className={style.Amount}>{pokemon.height}</span>
+            </div>
+            <div className={style.Menu}>
+              <div className={style.Height}></div>
+            </div>
+          </div>
+          <div className={style.Stats}>
+            <div className={style.DetailStats}>
+              <span>Weight</span>
+              <span className={style.Amount}>{pokemon.weight}</span>
+            </div>
+            <div className={style.Menu}>
+              <div className={style.Weight}></div>
+            </div>
+          </div>
         </div>
       </div>
       <div className={style.TypeInfo}>
@@ -69,6 +102,9 @@ const Detail = () => {
           );
         })}
       </div>
+      <button onClick={backTo} className={style.BtnBack}>
+        <span>Back</span>
+      </button>
     </div>
   );
 };

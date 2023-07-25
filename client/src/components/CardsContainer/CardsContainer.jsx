@@ -4,138 +4,111 @@ import Card from "../Card/Card";
 import style from "./CardsContainer.module.css";
 
 const CardsContainer = () => {
-  // console.log(searchPokemonByName.name === "" ? "vacio" : "pokemon");
+  // const [listOfPokemons, setListOfPokemons] = useState([]);
   const [current, setCurrent] = useState(0);
 
   let listOfPokemons = useSelector((state) => state.pokemon);
 
   let listOfType = useSelector((state) => state.types);
 
-  // filter function
-  // Seteamos un estado para guardar los resultados
-  const [filterPokeType, setFilterPokeType] = useState([]);
-  // Seteamos otro estado para manejar los checkbox
-  const [typeSelected, setTypeSelected] = useState({
-    grass: false,
-    normal: false,
-    fighting: false,
-    flying: false,
-    poison: false,
-    ground: false,
-    rock: false,
-    bug: false,
-    ghost: false,
-    steel: false,
-    fire: false,
-    water: false,
-    electric: false,
-    psychic: false,
-    ice: false,
-    dragon: false,
-    dark: false,
-    fairy: false,
-    unknow: false,
-    shadow: false,
-    bdd: false,
-    api: false,
-  });
+  const [typeSelect, setTypeSelect] = useState("");
 
-  // fn() de filtrado
-  const handleTypeCheck = (event) => {
-    // console.log(event.target.name);
-    // cambia el parametro del estado selecionado a true
-    setTypeSelected({
-      ...typeSelected,
-      [event.target.name]: event.target.checked,
-    });
-    // Si este es true iniciamos la logica
-    // Filtrado por API
-    if (event.target.name === "api") {
-      const filteredPokemons = listOfPokemons.filter(
-        (pokemon) => pokemon.created
+  const onChangeTypeSelect = (event) => {
+    const typeId = event.target.value;
+    setTypeSelect(typeId);
+    filterByType(typeId);
+  };
+
+  const filterByType = (Selected) => {
+    if (Selected) {
+      listOfPokemons.filter(
+        (pokemon) => pokemon.name
+        // pokemon.types?.map((type) => type.name).includes(Selected)
       );
-      setFilterPokeType([...filterPokeType, ...filteredPokemons]);
-      console.log(filteredPokemons);
-    }
-
-    // Filtrado por BDD
-    // if (event.target.name === "bdd") {
-    //   const filteredPokemons = listOfPokemons.filter(
-    //     (pokemon) => pokemon.created === true
-    //   );
-    //   console.log(filteredPokemons);
-    //   setFilterPokeType([...filterPokeType, ...filteredPokemons]);
-    // }
-    // if (event.target.checked) {
-    //   const filteredPokemons = listOfPokemons?.filter((poke) =>
-    //     poke.types?.map((type) => type.name).includes(event.target.name)
-    //   );
-    //   console.log(filteredPokemons);
-    //   setFilterPokeType([...filterPokeType, ...filteredPokemons]);
-    // }
-
-    // de lo contrario
-    else {
-      const filteredPokemons = filterPokeType?.filter(
-        (poke) =>
-          !poke.types?.map((type) => type.name).includes(event.target.name)
-      );
-      // console.log(filteredPokemons);
-      setFilterPokeType([...filteredPokemons]);
+      // console.log(listOfPokemons);
+      // return listOfPokemons;
     }
   };
 
   // Metodo de ordenamiento por Nombre y ataque
   const [filterSelected, setfilterSelected] = useState(0);
+  const [sourceTypeSelected, setSourceTypeSelected] = useState("");
 
-  const onChangeNameAndAtackSelected = (event) => {
+  const onChangeOrderSelect = (event) => {
     const selectedId = Number(event.target.value);
     setfilterSelected(selectedId);
-    filterByNameAndAtackSelected(selectedId);
+    filterByOrder(selectedId);
   };
 
-  const filterByNameAndAtackSelected = (Selected) => {
+  const onSourceTypeChange = (event) => {
+    const sourceSelected = event.target.value;
+    setSourceTypeSelected(sourceSelected);
+    if (sourceSelected !== "") {
+      // Tiene que ser distinto de all
+      filterByApiOrBdd(sourceSelected);
+    } else {
+      // restaurar valores como al principio
+    }
+    //filterByOrder(sourceSelected);
+  };
+
+  const filterByOrder = (Selected) => {
     // Seleccione que sean todos
-    if (Selected === 0) {
-      // Volver a poner los valores del array inicial
-      listOfPokemons.sort((pokemonA, pokemonB) =>
-        pokemonA.id > pokemonB.id ? 1 : -1
-      );
-    }
-    // Seleccione que sean Ascendentes
-    if (Selected === 1) {
-      //Ralizar el ordenamiento de A - Z y que se organicen descentendemente
-      listOfPokemons.sort((pokemonA, pokemonB) =>
-        pokemonA.name > pokemonB.name ? 1 : -1
-      );
-    }
-
-    // Seleccione que sean Descendentes
-    if (Selected === 2) {
-      // Ralizar el ordenamiento de Z - A y que se organicen descentendemente
-      listOfPokemons = listOfPokemons.sort((pokemonA, pokemonB) =>
-        pokemonA.name < pokemonB.name ? 1 : -1
-      );
-    }
-
-    //Seleccione que posean mas poder de ataque
-    if (Selected === 3) {
-      // Realizar el ordenamiento por mayor poder de ataque
-      listOfPokemons = listOfPokemons.sort((pokemonA, pokemonB) =>
-        pokemonA.stroke < pokemonB.stroke ? 1 : -1
-      );
-    }
-    if (Selected === 4) {
-      listOfPokemons = listOfPokemons.sort((pokemonA, pokemonB) =>
-        pokemonA.stroke > pokemonB.stroke ? 1 : -1
-      );
+    switch (Selected) {
+      case 0:
+        // Volver a poner los valores del array inicial
+        listOfPokemons.sort((pokemonA, pokemonB) =>
+          pokemonA.id > pokemonB.id ? 1 : -1
+        );
+        break;
+      case 1:
+        //Ralizar el ordenamiento de A - Z y que se organicen descentendemente
+        listOfPokemons.sort((pokemonA, pokemonB) =>
+          pokemonA.name > pokemonB.name ? 1 : -1
+        );
+        break;
+      case 2:
+        // Ralizar el ordenamiento de Z - A y que se organicen descentendemente
+        listOfPokemons.sort((pokemonA, pokemonB) =>
+          pokemonA.name < pokemonB.name ? 1 : -1
+        );
+        break;
+      case 3:
+        // Realizar el ordenamiento por mayor poder de ataque
+        listOfPokemons.sort((pokemonA, pokemonB) =>
+          pokemonA.stroke < pokemonB.stroke ? 1 : -1
+        );
+        break;
+      case 4:
+        listOfPokemons.sort((pokemonA, pokemonB) =>
+          pokemonA.stroke > pokemonB.stroke ? 1 : -1
+        );
+        break;
     }
   };
 
-  console.log(filterPokeType);
+  const filterByApiOrBdd = (sourceSelected) => {
+    switch (sourceSelected) {
+      case "api":
+        listOfPokemons = listOfPokemons = listOfPokemons.filter(
+          (pokemonA) => pokemonA.created === false
+        );
+        // console.log(listOfPokemons);
+        break;
+      case "bdd":
+        listOfPokemons = listOfPokemons = listOfPokemons.filter(
+          (pokemonA) => pokemonA.created === true
+        );
+        // console.log(listOfPokemons);
+        break;
+      default:
+        // Restaurar a los valores inciales
+        break;
+    }
+  };
+
   // Paginado ******
   const PaginationPokemon = (type) => {
-    console.log(type);
     if (type.length > 0) {
       // Limpiamos el array de elementos repetidos
       const typeClear = new Set(type);
@@ -165,10 +138,7 @@ const CardsContainer = () => {
       <div className={style.filterContainer}>
         <div className={style.OrderContainer}>
           <label>Order by : </label>
-          <select
-            value={filterSelected}
-            onChange={onChangeNameAndAtackSelected}
-          >
+          <select value={filterSelected} onChange={onChangeOrderSelect}>
             <option value={0}>All</option>
             <option value={1}>Ascendent</option>
             <option value={2}>Descendent</option>
@@ -177,41 +147,28 @@ const CardsContainer = () => {
           </select>
           <br />
         </div>
+        <div className={style.OrderContainer}>
+          <label>Source Type: </label>
+          <select value={sourceTypeSelected} onChange={onSourceTypeChange}>
+            <option value={""}>ALL</option>
+            <option value={"api"}>API</option>
+            <option value={"bdd"}>BDD</option>
+          </select>
+          <br />
+        </div>
         <div className={style.TypeOrder}>
           <div className={style.FilterTypeContainer}>
-            {/* <button>Abrir</button> */}
-            <span>Filter by </span>
-            {listOfType.map((type) => {
-              return (
-                <div key={type.id} className={style.GroupType}>
-                  <input
-                    type="checkbox"
-                    name={type.name}
-                    id={type.id}
-                    onChange={handleTypeCheck}
-                  />
-                  <label htmlFor={type.name}>{type.name}</label>
-                </div>
-              );
-            })}
-            <div className={style.GroupType}>
-              <input
-                type="checkbox"
-                name="bdd"
-                id="BDD"
-                onChange={handleTypeCheck}
-              />
-              <label htmlFor="BDD">BDD</label>
-            </div>
-            <div className={style.GroupType}>
-              <input
-                type="checkbox"
-                name="api"
-                id="API"
-                onChange={handleTypeCheck}
-              />
-              <label htmlFor="API">API</label>
-            </div>
+            <label>Filter by </label>
+            <select value={typeSelect} onChange={onChangeTypeSelect}>
+              <option value={"all"}>All</option>
+              {listOfType.map((type) => {
+                return (
+                  <option value={type.name} key={type.id}>
+                    {type.name}
+                  </option>
+                );
+              })}
+            </select>
           </div>
         </div>
       </div>
@@ -239,7 +196,7 @@ const CardsContainer = () => {
                 />
               );
             })
-          : PaginationPokemon(filterPokeType).map((poke) => {
+          : PaginationPokemon(listOfPokemons).map((poke) => {
               return (
                 <Card
                   key={poke.id}
