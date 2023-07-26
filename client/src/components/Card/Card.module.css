@@ -29,15 +29,15 @@
 
 .NameOfPokemon{
     position: relative;
-    top: 40px;
+    top: 45px;
     color: #03045e;
 }
 
 .NumberOfPokemon{
     position: relative;
-    font-weight: 800;
-    color: #888;
-    top: 48px;
+    font-weight: bold;
+    color: #878147;
+    top: 49px;
     right: 80px;
 }
 

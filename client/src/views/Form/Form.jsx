@@ -41,47 +41,52 @@ const Form = () => {
   // console.log(createPokemon);
 
   const validate = (form) => {
-    switch (form) {
-      case form.name:
-        if (!form.name) setError({ ...error, name: "Name is required" });
-        break;
-
-      default:
-        break;
+    if (!form.name) {
+      setError({ ...error, name: "Name is required" });
+      return false;
     }
-    // if (!form.name) {
-    //   setError({ ...error, name: "Name is required" });
-    // } else if (form.name.length > 15) {
-    //   setError({ ...error, name: "Exceeds the 15 characters allowed" });
-    // } else if (!stringRegExp.test(form.name)) {
-    //   setError({ ...error, name: "Name is invalid" });
-    // }
+    if (form.name.length > 15) {
+      setError({ ...error, name: "Exceed the limit" });
+      return false;
+    }
 
-    // if (!numberRegExp.test(form.health)) {
-    //   setError({ ...error, health: "Health is invalid" });
-    // } else if (form.health > 99) {
-    //   setError({ ...error, health: "exceed health limit" });
-    // }
-    // if (!numberRegExp.test(form.defending)) {
-    //   setError({ ...error, defending: "Defending is invalid" });
-    // } else if (form.defending > 99) {
-    //   setError({ ...error, defending: "exceed defending limit" });
-    // }
-    // if (!numberRegExp.test(form.stroke)) {
-    //   setError({ ...error, stroke: "Stroke is invalid" });
-    // } else if (form.stroke > 99) {
-    //   setError({ ...error, stroke: "exceed stroke limit" });
-    // }
-    // if (!numberRegExp.test(form.speed)) {
-    //   setError({ ...error, speed: "Speed is invalid" });
-    // } else if (form.speed > 99) {
-    //   setError({ ...error, speed: "exceed speed limit" });
-    // }
+    if (!Number(form.health)) {
+      setError({ ...error, health: "Health is invalid" });
+      return false;
+    }
+    if (form.health > 99) {
+      setError({ ...error, health: "exceed health limit" });
+      return false;
+    }
+    if (!numberRegExp.test(form.defending)) {
+      setError({ ...error, defending: "Defending is invalid" });
+      return false;
+    }
+    if (form.defending > 99) {
+      setError({ ...error, defending: "exceed defending limit" });
+      return false;
+    }
+    if (!numberRegExp.test(form.stroke)) {
+      setError({ ...error, stroke: "Stroke is invalid" });
+      return false;
+    }
+    if (form.stroke > 99) {
+      setError({ ...error, stroke: "exceed stroke limit" });
+      return false;
+    }
+    if (!numberRegExp.test(form.speed)) {
+      setError({ ...error, speed: "Speed is invalid" });
+      return false;
+    }
+    if (form.speed > 99) {
+      setError({ ...error, speed: "exceed speed limit" });
+      return false;
+    }
+    return true;
   };
   // Exceeds the 15 characters allowed
   const handleChange = (event) => {
     const { value, name } = event.target;
-    validate({ ...form, [name]: value });
     setForm({ ...form, [name]: value });
   };
 
@@ -94,113 +99,146 @@ const Form = () => {
   // se esta enviando con exito el formulario....
   const submitHandler = (event) => {
     event.preventDefault();
-    dispatch(postCreate(form));
+
+    const isFormValid = validate(form);
+    if (isFormValid) {
+      dispatch(postCreate(form));
+    }
   };
 
   // solucionar la creacion del nuevo pokemon desde el action/redux
 
   return (
-    <form onSubmit={submitHandler} className={style.ContainerForm}>
-      <div></div>
-      <div>
-        <h2>Crea tu propio Pokemón</h2>
-      </div>
-      <div>
-        <label>Name </label>
-        <input
-          type="text"
-          name="name"
-          placeholder="Example.."
-          value={form.name}
-          onChange={handleChange}
-        />
-        {error.name && <span>{error.name}</span>}
-      </div>
-      <div>
-        <label>Image </label>
-        <input
-          type="text"
-          name="image"
-          placeholder="default_image.png"
-          value={form.image}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label>Health </label>
-        <input
-          type="number"
-          name="health"
-          value={form.health}
-          onChange={handleChange}
-        />
-        {error.health && <span>{error.health}</span>}
-      </div>
-      <div>
-        <label>Stroke </label>
-        <input
-          type="number"
-          name="stroke"
-          value={form.stroke}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label>Defending </label>
-        <input
-          type="number"
-          name="defending"
-          value={form.defending}
-          onChange={handleChange}
-        />
-        {error.defending && <span>{error.defending}</span>}
-      </div>
-      <div>
-        <label>Speed </label>
-        <input
-          type="number"
-          name="speed"
-          value={form.speed}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label>Height </label>
-        <input
-          type="number"
-          name="height"
-          value={form.height}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label>Weigh </label>
-        <input
-          type="number"
-          name="weight"
-          value={form.weight}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label>Type </label>
-        {types?.map((type) => (
-          <div key={type.id}>
-            <input
-              type="checkbox"
-              name="type"
-              id={type.id}
-              value={type.name}
-              onChange={handleTypeChange}
-            />
-            <label>{type.name}</label>
+    <form onSubmit={submitHandler} className={style.Form}>
+      <div className={style.ContainerForm}>
+        <div className={style.IntroCreated}>
+          <h2>Crea tu propio Pokemón</h2>
+        </div>
+        <div className={style.StatsAllInfo}>
+          <div classname={style.inputContainer}>
+            <div className={style.labelAndInput}>
+              <label>Name </label>
+              <input
+                className={style.inputStats}
+                type="text"
+                name="name"
+                placeholder="Example.."
+                value={form.name}
+                onChange={handleChange}
+              />
+            </div>
+            {error.name && <span>{error.name}</span>}
           </div>
-        ))}
-      </div>
-      <div>
-        <button type="submit">
-          <span>Submit</span>
-        </button>
+          <div classname={style.inputContainer}>
+            <div className={style.labelAndInput}>
+              <label>Image </label>
+              <input
+                className={style.inputStats}
+                type="text"
+                name="image"
+                placeholder="default_image.png"
+                value={form.image}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div classname={style.inputContainer}>
+            <div className={style.labelAndInput}>
+              <label>Health </label>
+              <input
+                className={style.inputStats}
+                type="number"
+                name="health"
+                value={form.health}
+                onChange={handleChange}
+              />
+            </div>
+            {error.health && <span>{error.health}</span>}
+          </div>
+          <div classname={style.inputContainer}>
+            <div className={style.labelAndInput}>
+              <label>Stroke </label>
+              <input
+                className={style.inputStats}
+                type="number"
+                name="stroke"
+                value={form.stroke}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div classname={style.inputContainer}>
+            <div className={style.labelAndInput}>
+              <label>Defense </label>
+              <input
+                className={style.inputStats}
+                type="number"
+                name="defending"
+                value={form.defending}
+                onChange={handleChange}
+              />
+            </div>
+            {error.defending && <span>{error.defending}</span>}
+          </div>
+          <div classname={style.inputContainer}>
+            <div className={style.labelAndInput}>
+              <label>Speed </label>
+              <input
+                className={style.inputStats}
+                type="number"
+                name="speed"
+                value={form.speed}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div classname={style.inputContainer}>
+            <div className={style.labelAndInput}>
+              <label>Height </label>
+              <input
+                className={style.inputStats}
+                type="number"
+                name="height"
+                value={form.height}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div classname={style.inputContainer}>
+            <div className={style.labelAndInput}>
+              <label>Weigh </label>
+              <input
+                className={style.inputStats}
+                type="number"
+                name="weight"
+                value={form.weight}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+        </div>
+        <div className={style.TypeContainer}>
+          <div>
+            <label>Type :</label>
+          </div>
+          {types?.map((type) => (
+            <div key={type.id}>
+              <input
+                type="checkbox"
+                name="type"
+                id={type.id}
+                value={type.name}
+                onChange={handleTypeChange}
+              />
+              <label>{type.name}</label>
+            </div>
+          ))}
+        </div>
+        <div>
+          <button type="submit" className={style.BtnContainer}>
+            <span>Submit</span>
+          </button>
+        </div>
       </div>
     </form>
   );

@@ -1,47 +1,73 @@
+.Form {
+    background: #eaf4f4;
+}
+
 .ContainerForm {
-    /* display: flex; */
-    height: 100vh;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 55%;
+    left: 50%;
+    background: linear-gradient(30deg, #0077b6, #ade8f4);
+    display: flex;
     justify-content: center;
-    background: url(https://media.istockphoto.com/id/1151507744/photo/modern-background.jpg?s=612x612&w=0&k=20&c=YZuo8VqBJM_tJn61ytNWyi843IeVejpHIr2avFZTiag=);
+    flex-direction: column;
+    align-items: center;
+    height: 640px;
+    width: 600px;
+    box-shadow: 0 20px 30px #888;
+    justify-content: center;
     background-size: cover;
 }
 
-.DivFormContainer{
-    /* display: flex; */
-    /* background: #251351;
-    width: 600px;
-    height: 600px; */
+
+.StatsAllInfo label {
+    font-weight: bold;
+    margin-right: 15px;
 }
 
-.TitleForm {
-    /* color: blueviolet; */
+.StatsAllInfo input {
+    border-radius: 5px;
+    height: 18px;
 }
 
-.InputText{
-    /* display: flex;
-    margin: 20px;
-    color: white;
-    font-family: sans-serif;
-    gap:1rem;
-    align-items: center;
-    justify-content: center; */
+.IntroCreated h2 {
+    padding: 15px;
 }
 
-.InputText input{
-    /* height: 20px; */
-}
-
-.InputName {
-    /* height: 40px; */
-}
-
-.InputCheck {
-    /* display: flex;
-    justify-content: center;
+.TypeContainer {
+    margin-top: 25px;
+    display: flex;
     flex-wrap: wrap;
-    gap: 1rem; */
+    width: 80%;
 }
 
-.InputCheck label{
-    /* color: white; */
+.TypeContainer div {
+    padding: 8px;
+}
+
+
+.inputStats {
+    outline: none;
+}
+
+.BtnContainer {
+    position: relative;
+    bottom: 20px;
+    width: 80px;
+    height: 40px;
+    font-weight: bold;
+}
+
+
+.labelAndInput {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 6px;
 }
