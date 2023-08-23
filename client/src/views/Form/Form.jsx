@@ -99,7 +99,18 @@ const Form = () => {
   // se esta enviando con exito el formulario....
   const submitHandler = (event) => {
     event.preventDefault();
-
+    setForm({
+      name: "",
+      image: "",
+      health: 0,
+      stroke: 0,
+      defending: 0,
+      speed: 0,
+      height: 0,
+      weight: 0,
+      type: [],
+    });
+    // console.log(form);
     const isFormValid = validate(form);
     if (isFormValid) {
       dispatch(postCreate(form));

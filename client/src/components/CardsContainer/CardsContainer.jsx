@@ -13,6 +13,7 @@ const CardsContainer = () => {
   const dispatch = useDispatch();
 
   let listOfPokemons = useSelector((state) => state.pokemon);
+  console.log(listOfPokemons);
   let oldPokemon = useSelector((state) => state.oldPokemon);
   let listOfType = useSelector((state) => state.types);
 

@@ -3,6 +3,7 @@ import { toUperCaseStr } from "../../utils/helper";
 import style from "./Card.module.css";
 
 const Card = ({ name, type, image, id }) => {
+  console.log(name, type, image, id);
   const nameUperCase = toUperCaseStr(name);
   // console.log(props.id);
   return (
