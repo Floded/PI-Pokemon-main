@@ -24,11 +24,11 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       stroke: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       defending: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       speed: {

@@ -230,10 +230,10 @@ const Form = () => {
         </div>
         <div className={style.TypeContainer}>
           <div>
-            <label>Type :</label>
+            <label className={style.LabeType}>Type :</label>
           </div>
           {types?.map((type) => (
-            <div key={type.id}>
+            <div key={type.id} className={style.CheckboxType}>
               <input
                 type="checkbox"
                 name="type"

@@ -20,8 +20,12 @@
 }
 
 
-.StatsAllInfo label {
+.StatsAllInfo {
     font-weight: bold;
+
+}
+
+.StatsAllInfo label {
     margin-right: 15px;
 }
 
@@ -45,6 +49,13 @@
     padding: 8px;
 }
 
+.LabeType {
+    font-weight: bold;
+}
+
+/* .CheckboxType {
+    width: 100px;
+} */
 
 .inputStats {
     outline: none;
@@ -61,8 +72,10 @@
 
 .labelAndInput {
     display: flex;
+    padding: 3px;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
 }
 
 .inputContainer {
